@@ -1,5 +1,5 @@
 from ._abstract import AbstractScraper
-from ._utils import get_minutes, get_yields
+from ._utils import get_minutes, get_yields, normalize_string
 
 
 class Cucchiaio(AbstractScraper):
@@ -11,7 +11,7 @@ class Cucchiaio(AbstractScraper):
         return self.schema.author()
 
     def title(self):
-        return self.schema.title()
+        return self.soup.find('title').get_text()
 
     def total_time(self):
         block = self.soup.find("div", {"class": "scheda-ricetta-new"})
@@ -36,7 +36,15 @@ class Cucchiaio(AbstractScraper):
         return self.schema.ingredients()
 
     def instructions(self):
-        return self.schema.instructions()
+        instructions_div = self.soup.find("div", {"class": "row mx-0 mb-f30"})
+        
+        instructions = [
+            normalize_string(instruction.get_text(strip=True, separator=" "))
+            for instruction in instructions_div.find_all(
+                "p"
+            )
+        ]
+        return "\n".join(instructions)
 
     def ratings(self):
         return None
