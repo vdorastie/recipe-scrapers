@@ -26,7 +26,7 @@ class ComidinhasDoChef(AbstractScraper):
     def ingredients(self):
         return [
             normalize_string(ingredient.get_text())
-            for ingredient in self.soup.find_all("li", {"itemprop": "recipeIngredient"})
+            for ingredient in self.soup.find_all("li", {"class": "accordeon-text"})
         ]
 
     def instructions(self):
