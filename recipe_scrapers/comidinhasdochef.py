@@ -33,7 +33,7 @@ class ComidinhasDoChef(AbstractScraper):
         instructions_div = self.soup.find("div", {"class": "accordeon-text"})
         
         instructions = [
-            normalize_string(instruction.get_text(strip=True))
+            normalize_string(instruction.get_text(strip=True, separator=" "))
             for instruction in instructions_div.find_all(
                 "li"
             )
