@@ -30,10 +30,12 @@ class ComidinhasDoChef(AbstractScraper):
         ]
 
     def instructions(self):
+        instructions_div = self.soup.find("div", {"class": "accordeon-text"})
+        
         instructions = [
             normalize_string(instruction.get_text(strip=True))
-            for instruction in self.soup.find_all(
-                "li", {"class": "accordeon-text"}
+            for instruction in instructions_div.find_all(
+                "li"
             )
         ]
         return "\n".join(instructions)
