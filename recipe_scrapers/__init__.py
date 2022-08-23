@@ -47,6 +47,7 @@ from .copykat import CopyKat
 from .countryliving import CountryLiving
 from .cucchiaio import Cucchiaio
 from .cuisineaz import CuisineAZ
+from .cuisineztelequebec import Cuisineztelequebec
 from .cybercook import Cybercook
 from .davidlebovitz import DavidLebovitz
 from .delish import Delish
@@ -255,6 +256,7 @@ SCRAPERS = {
     CountryLiving.host(): CountryLiving,
     Cucchiaio.host(): Cucchiaio,
     CuisineAZ.host(): CuisineAZ,
+    Cuisineztelequebec.host(): Cuisineztelequebec,
     Cybercook.host(): Cybercook,
     DavidLebovitz.host(): DavidLebovitz,
     Delish.host(): Delish,
