@@ -26,14 +26,14 @@ class ComidinhasDoChef(AbstractScraper):
     def ingredients(self):
         return [
             normalize_string(ingredient.get_text())
-            for ingredient in self.soup.find_all("li", {"class": "accordeon-text"})
+            for ingredient in self.soup.find_all("li", {"itemprop": "recipeIngredient"})
         ]
 
     def instructions(self):
         instructions = [
             normalize_string(instruction.get_text(strip=True))
             for instruction in self.soup.find_all(
-                "li", {"itemprop": "recipeInstructions"}
+                "li", {"class": "accordeon-text"}
             )
         ]
         return "\n".join(instructions)
