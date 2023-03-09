@@ -102,6 +102,7 @@ from .joyfoodsunshine import Joyfoodsunshine
 from .justataste import JustATaste
 from .justbento import JustBento
 from .justonecookbook import JustOneCookbook
+from .kabeleins import Kabeleins
 from .kennymcgovern import KennyMcGovern
 from .kingarthur import KingArthur
 from .kitchenstories import KitchenStories
@@ -319,6 +320,7 @@ SCRAPERS = {
     JustATaste.host(): JustATaste,
     JustBento.host(): JustBento,
     JustOneCookbook.host(): JustOneCookbook,
+    Kabeleins.host(): Kabeleins,
     KennyMcGovern.host(): KennyMcGovern,
     KingArthur.host(): KingArthur,
     KitchenStories.host(): KitchenStories,
