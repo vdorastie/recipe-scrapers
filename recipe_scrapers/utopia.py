@@ -8,10 +8,10 @@ class Utopia(AbstractScraper):
         return "utopia.de"
 
     def title(self):
-        return self.soup.find("div", {"id": "main-content"}).find("h1").get_text()
+        return self.soup.find("div", {"id": "main_content"}).find("h1").get_text()
 
     def instructions(self):
-        instructions_div = self.soup.find("div", {"id": "main-content"}).find_all("ol")
+        instructions_div = self.soup.find("div", {"id": "main_content"}).find_all("ol")
         instructions_ils = [instruction_ol.find_all("li") for instruction_ol in instructions_div]
         instructions_ils = [item for sublist in instructions_ils for item in sublist]
 		

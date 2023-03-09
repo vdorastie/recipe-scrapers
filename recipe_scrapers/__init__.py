@@ -445,7 +445,6 @@ SCRAPERS = {
 
 def scrape_me(url_path, **options):
     host_name = get_host_name(url_path)
-
     try:
         scraper = SCRAPERS[host_name]
     except KeyError:
@@ -457,7 +456,7 @@ def scrape_me(url_path, **options):
             if not wild_scraper.schema.data:
                 raise NoSchemaFoundInWildMode(url_path)
             return wild_scraper
-
+    
     return scraper(url_path, **options)
 
 
@@ -498,4 +497,4 @@ def scrape_html(html: str, org_url: Optional[str] = None, **options) -> Abstract
 
 
 __all__ = ["scrape_me", "scrape_html"]
-name = "recipe_scrapers"
+name = "recipe_scrapers"   
