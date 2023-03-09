@@ -74,6 +74,7 @@ from .forksoverknives import ForksOverKnives
 from .franzoesischkochen import FranzoesischKochen
 from .fredriksfikaallas import FredriksFikaAllas
 from .g750g import G750g
+from .gekonntgekocht import Gekonntgekocht
 from .geniuskitchen import GeniusKitchen
 from .giallozafferano import GialloZafferano
 from .gimmesomeoven import GimmeSomeOven
@@ -288,6 +289,7 @@ SCRAPERS = {
     FranzoesischKochen.host(): FranzoesischKochen,
     FredriksFikaAllas.host(): FredriksFikaAllas,
     G750g.host(): G750g,
+    Gekonntgekocht.host(): Gekonntgekocht,
     GeniusKitchen.host(): GeniusKitchen,
     GialloZafferano.host(): GialloZafferano,
     GimmeSomeOven.host(): GimmeSomeOven,
