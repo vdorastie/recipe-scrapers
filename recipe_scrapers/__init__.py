@@ -49,6 +49,7 @@ from .cucchiaio import Cucchiaio
 from .cuisineaz import CuisineAZ
 from .cuisineztelequebec import Cuisineztelequebec
 from .cybercook import Cybercook
+from .daskochrezept import Daskochrezept
 from .davidlebovitz import DavidLebovitz
 from .delish import Delish
 from .ditchthecarbs import DitchTheCarbs
@@ -263,6 +264,7 @@ SCRAPERS = {
     CuisineAZ.host(): CuisineAZ,
     Cuisineztelequebec.host(): Cuisineztelequebec,
     Cybercook.host(): Cybercook,
+    Daskochrezept.host(): Daskochrezept,
     DavidLebovitz.host(): DavidLebovitz,
     Delish.host(): Delish,
     DitchTheCarbs.host(): DitchTheCarbs,
@@ -501,4 +503,4 @@ def scrape_html(html: str, org_url: Optional[str] = None, **options) -> Abstract
 
 
 __all__ = ["scrape_me", "scrape_html"]
-name = "recipe_scrapers"   
+name = "recipe_scrapers"  
