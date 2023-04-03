@@ -162,6 +162,7 @@ from .rachlmansfield import RachlMansfield
 from .rainbowplantlife import RainbowPlantLife
 from .realfoodtesco import RealFoodTesco
 from .realsimple import RealSimple
+from .receptfavoriter import ReceptFavoriter
 from .recetasdeescandalo import Recetasdeescandalo
 from .recipetineats import RecipeTinEats
 from .redhousespice import RedHouseSpice
@@ -393,6 +394,7 @@ SCRAPERS = {
     RealFoodTesco.host(): RealFoodTesco,
     RealSimple.host(): RealSimple,
     RealFoodTesco.host(): RealFoodTesco,
+    ReceptFavoriter.host(): ReceptFavoriter,
     Recetasdeescandalo.host(): Recetasdeescandalo,
     RecipeTinEats.host(): RecipeTinEats,
     RedHouseSpice.host(): RedHouseSpice,
