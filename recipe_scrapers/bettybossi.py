@@ -2,6 +2,7 @@ from typing import Optional, Union, Tuple, Dict
 from requests import Session
 
 from ._abstract import AbstractScraper, HEADERS
+from ._utils import normalize_string
 
 
 class BettyBossi(AbstractScraper):
@@ -44,7 +45,7 @@ class BettyBossi(AbstractScraper):
         return self.schema.author()
 
     def title(self):
-        return self.schema.title()
+        return self.soup.find("h1", {"class": "title"}).text
 
     def category(self):
         return self.schema.category()
@@ -62,7 +63,12 @@ class BettyBossi(AbstractScraper):
         return self.schema.ingredients()
 
     def instructions(self):
-        return self.schema.instructions()
+        instructions_lis = self.soup.find("section", {"class": "bb-recipe-steps"}).find("ul").find_all("li")
+        instructions = [
+            normalize_string(instruction.get_text(strip=True, separator=" "))
+            for instruction in instructions_lis
+        ]
+        return " ".join(instructions)
 
     def ratings(self):
         return self.schema.ratings()
