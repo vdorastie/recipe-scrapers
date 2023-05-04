@@ -506,3 +506,26 @@ def scrape_html(html: str, org_url: Optional[str] = None, **options) -> Abstract
 
 __all__ = ["scrape_me", "scrape_html"]
 name = "recipe_scrapers"  
+
+def scrape_link(link):
+        try:
+            scraper = scrape_me(link, wild_mode=True)
+        except Exception:
+            print(f"Exception for link: {link}")
+            return ""
+            
+        try:
+            instructions = scraper.instructions()
+            instructions = instructions.replace('/r', ". ").replace('/n', '. ')
+            instructions = " ".join(instructions.split())
+        except Exception:
+            instructions = ""
+        
+        try:
+            title = scraper.title()
+            title = title.replace('/r', ". ").replace('/n', '. ')
+            title = " ".join(title.split())
+        except Exception:
+            title = ""
+		
+        return f"{title}. {instructions}"
