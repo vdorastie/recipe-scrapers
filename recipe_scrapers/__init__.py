@@ -83,6 +83,7 @@ from .globo import Globo
 from .gonnawantseconds import GonnaWantSeconds
 from .goustojson import GoustoJson
 from .greatbritishchefs import GreatBritishChefs
+from .gutekueche import Gutekueche
 from .halfbakedharvest import HalfBakedHarvest
 from .hassenchef import Hassanchef
 from .headbangerskitchen import HeadbangersKitchen
@@ -113,6 +114,7 @@ from .koket import Koket
 from .kptncook import KptnCook
 from .kuchniadomowa import KuchniaDomowa
 from .kwestiasmaku import KwestiaSmaku
+from .landleyskok import LandleySkok
 from .latelierderoxane import LAtelierDeRoxane
 from .lecker import Lecker
 from .lecremedelacrumb import LeCremeDeLaCrumb
@@ -160,6 +162,7 @@ from .rachlmansfield import RachlMansfield
 from .rainbowplantlife import RainbowPlantLife
 from .realfoodtesco import RealFoodTesco
 from .realsimple import RealSimple
+from .receptfavoriter import ReceptFavoriter
 from .recetasdeescandalo import Recetasdeescandalo
 from .recipetineats import RecipeTinEats
 from .redhousespice import RedHouseSpice
@@ -300,6 +303,7 @@ SCRAPERS = {
     GonnaWantSeconds.host(): GonnaWantSeconds,
     GoustoJson.host(): GoustoJson,
     GreatBritishChefs.host(): GreatBritishChefs,
+    Gutekueche.host(): Gutekueche,
     HEB.host(): HEB,
     HalfBakedHarvest.host(): HalfBakedHarvest,
     Hassanchef.host(): Hassanchef,
@@ -335,6 +339,7 @@ SCRAPERS = {
     KptnCook.host(subdomain="sharing"): KptnCook,
     KuchniaDomowa.host(): KuchniaDomowa,
     KwestiaSmaku.host(): KwestiaSmaku,
+    LandleySkok.host(): LandleySkok,
     LAtelierDeRoxane.host(): LAtelierDeRoxane,
     LeCremeDeLaCrumb.host(): LeCremeDeLaCrumb,
     Lecker.host(): Lecker,
@@ -389,6 +394,7 @@ SCRAPERS = {
     RealFoodTesco.host(): RealFoodTesco,
     RealSimple.host(): RealSimple,
     RealFoodTesco.host(): RealFoodTesco,
+    ReceptFavoriter.host(): ReceptFavoriter,
     Recetasdeescandalo.host(): Recetasdeescandalo,
     RecipeTinEats.host(): RecipeTinEats,
     RedHouseSpice.host(): RedHouseSpice,

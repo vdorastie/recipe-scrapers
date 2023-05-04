@@ -2,22 +2,18 @@ from ._abstract import AbstractScraper
 from ._utils import normalize_string
 
 
-class Gekonntgekocht(AbstractScraper):
+class LandleySkok(AbstractScraper):
     @classmethod
     def host(cls):
-        return "gekonntgekocht.de"
+        return "landleyskok.se"
 
     def title(self):
-        return self.soup.find(
-            'h1',
-            {'class': 'title'}
-        ).get_text()
+       return self.soup.find("title").text
 
     def instructions(self):
-        instructions_p = self.soup.find_all("p", {"itemprop": "recipeInstructions"})
-		
+        instructions_lis = self.soup.find("div", {"class": "post-content"}).find_all("p", {"class":"instructions howto"})
         instructions = [
             normalize_string(instruction.get_text(strip=True, separator=" "))
-            for instruction in instructions_p
+            for instruction in instructions_lis
         ]
         return " ".join(instructions)
