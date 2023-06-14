@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 from ._utils import get_yields, normalize_string
 
@@ -8,12 +9,10 @@ class KwestiaSmaku(AbstractScraper):
         return "kwestiasmaku.com"
 
     def author(self):
-        return normalize_string(
-            self.soup.find("span", {"itemprop": "author"}).get_text()
-        )
+        return self.schema.author()
 
     def title(self):
-        return normalize_string(self.soup.find("div", {"itemprop": "name"}).get_text())
+        return self.schema.title()
 
     def yields(self):
         return get_yields(
@@ -40,4 +39,4 @@ class KwestiaSmaku(AbstractScraper):
         return "\n".join([normalize_string(i.get_text()) for i in instructions])
 
     def ratings(self):
-        return float(self.soup.find("span", {"itemprop": "ratingValue"}).get_text())
+        return self.schema.ratings()

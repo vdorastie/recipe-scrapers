@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 
 
@@ -5,6 +6,9 @@ class CuisineAZ(AbstractScraper):
     @classmethod
     def host(cls):
         return "cuisineaz.com"
+
+    def author(self):
+        return self.schema.author()
 
     def title(self):
         return self.schema.title()

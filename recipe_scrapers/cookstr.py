@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 from ._utils import get_minutes, get_yields, normalize_string
 
@@ -16,7 +17,7 @@ class Cookstr(AbstractScraper):
         sections = self.soup.findAll("div", {"class": "articleAttrSection"})
         total_time = 0
         for section in sections:
-            time = section.find(text="Total Time")
+            time = section.find(string="Total Time")
             if time:
                 total_time += get_minutes(time.parent.parent)
         return total_time
@@ -24,7 +25,7 @@ class Cookstr(AbstractScraper):
     def yields(self):
         sections = self.soup.findAll("span", {"class": "attrLabel"})
         for section in sections:
-            serves = section.find(text="Serves")
+            serves = section.find(string="Serves")
             if serves:
                 return get_yields(serves.parent.parent)
         raise Exception("Servings amount not found")

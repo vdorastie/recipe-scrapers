@@ -71,3 +71,50 @@ class TestUtils(unittest.TestCase):
     def test_get_minutes_handles_to(self):
         text = "15 to 20 minutes"
         self.assertEqual(20, get_minutes(text))
+
+    iso8601_fixtures = {
+        "PT1H": 60,
+        "PT20M": 20,
+        "PT2H10M": 130,
+        "PT0H9M30S": 10,
+    }
+
+    def test_get_minutes_handles_iso8601(self):
+        for text, expected_minutes in self.iso8601_fixtures.items():
+            with self.subTest(text=text):
+                self.assertEqual(expected_minutes, get_minutes(text))
+
+    def test_list_public_methods(self):
+        from recipe_scrapers import AbstractScraper
+
+        public_method_names = [
+            method
+            for method in dir(AbstractScraper)
+            if callable(getattr(AbstractScraper, method))
+            if not method.startswith("_") and method not in ["soup", "links", "to_json"]
+        ]
+        self.assertEqual(
+            [
+                "author",
+                "canonical_url",
+                "category",
+                "cook_time",
+                "cuisine",
+                "description",
+                "host",
+                "image",
+                "ingredients",
+                "instructions",
+                "instructions_list",
+                "language",
+                "nutrients",
+                "prep_time",
+                "ratings",
+                "reviews",
+                "site_name",
+                "title",
+                "total_time",
+                "yields",
+            ],
+            public_method_names,
+        )

@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 import re
 
 from ._abstract import AbstractScraper
@@ -52,6 +53,4 @@ class Panelinha(AbstractScraper):
         return "\n".join(instructions)
 
     def yields(self):
-        return normalize_string(
-            self.soup.find("span", string="Serve").nextSibling.get_text()
-        )
+        return self.schema.yields()

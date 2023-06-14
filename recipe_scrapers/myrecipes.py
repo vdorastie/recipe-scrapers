@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 
 
@@ -23,6 +24,3 @@ class MyRecipes(AbstractScraper):
 
     def instructions(self):
         return self.schema.instructions()
-
-    def ratings(self):
-        return self.schema.ratings()

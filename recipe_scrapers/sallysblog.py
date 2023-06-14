@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from ._abstract import AbstractScraper
 from ._utils import get_minutes, normalize_string
 
@@ -8,35 +10,54 @@ class SallysBlog(AbstractScraper):
         return "sallys-blog.de"
 
     def title(self):
-        return normalize_string(
-            self.soup.find("h1", {"class": "blog--detail-headline"}).get_text()
-        )
+        return normalize_string(self.soup.head.find("title").get_text())
+
+    def image(self):
+        image_element = self.soup.find("div", {"class": "images-wrap"}).findAll(
+            "img", {"sizes": "100vw"}
+        )[0]
+        image_src = image_element["src"]
+        image_url = unquote(image_src).split("url=")[1].split("&")[0]
+        return image_url
 
     def total_time(self):
-        return get_minutes(self.soup.find("span", {"id": "zubereitungszeit"}))
+        heading = self.soup.find("p", string="Zubereitungszeit")
+        timing = heading.find_next_sibling("h6")
+        return get_minutes(timing.text)
+
+    def _servings_heading(self):
+        return self.soup.find("h4", string="Zutaten für:")
 
     def yields(self):
-        amount = self.soup.find("input", {"class": "float-left"}).get("value")
-        unit = self.soup.find("span", {"id": "is_singular"}).get_text()
+        servings_heading = self._servings_heading()
+        servings = servings_heading.find_next_sibling("div").find("input")
+        return servings["value"]
 
-        return f"{amount} {unit}"
+    def _groupings(self):
+        servings_heading = self._servings_heading()
+        ingredients_area = servings_heading.next_sibling.next_sibling
+        return ingredients_area.find_all("div", recursive=False)
 
     def ingredients(self):
-        ingredients = self.soup.findAll("li", {"class": "quantity"})
+        descriptions = []
+        for grouping in self._groupings():
+            ingredients = grouping.find_all("div", recursive=False)
+            for ingredient in ingredients:
+                descriptions.append(ingredient.text)
 
-        return [normalize_string(i.get_text()) for i in ingredients]
+        return [normalize_string(description) for description in descriptions]
 
     def instructions(self):
-        instructionBlock = self.soup.find(
-            "div", {"class": "blog--detail-description block"}
-        )
-        instructions = instructionBlock.findAll(
-            "div", {"class": ["content_type_2", "content_type_3", "content_type_4"]}
-        )
+        grouping_titles = {grouping.find("h5").text for grouping in self._groupings()}
+        uppercase_titles = self.soup.find_all("h2", {"class": "uppercase"})
+
+        descriptions = []
+        for title in uppercase_titles:
+            if title.text in grouping_titles or title.text.endswith("fertigstellen"):
+                instructions = title.find_next_sibling("div").find_all("p")
+                for instruction in instructions:
+                    descriptions.append(instruction.text)
 
         return "\n".join(
-            [
-                normalize_string(instruction.find("p").get_text())
-                for instruction in instructions
-            ]
+            [normalize_string(description) for description in descriptions]
         )

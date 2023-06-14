@@ -2,7 +2,7 @@ from recipe_scrapers.eatsmarter import Eatsmarter
 from tests import ScraperTest
 
 
-class TestClosetCooking(ScraperTest):
+class TestEatSmarter(ScraperTest):
 
     scraper_class = Eatsmarter
 
@@ -20,23 +20,23 @@ class TestClosetCooking(ScraperTest):
             self.harvester_class.title(), "Citrus Avocado Salad with Almonds"
         )
 
-    def test_total_time(self):
-        self.assertEqual(20, self.harvester_class.total_time())
+    def test_author(self):
+        self.assertEqual(self.harvester_class.author(), "EAT SMARTER")
 
     def test_yields(self):
         self.assertEqual("4 servings", self.harvester_class.yields())
 
     def test_ingredients(self):
-        self.assertCountEqual(
+        self.assertEqual(
             [
-                "2 tablespoons Sliced almonds",
+                "2 Tbsps slivered almonds",
                 "2 stalks Celery",
-                "2 ounces green Olives (pitted)",
+                "2 ozs green Olives (pitted)",
                 "3 Oranges",
                 "1 pink Grapefruit",
-                "1 Belgian endive",
+                "1 Endive",
                 "1 Avocado",
-                "2 tablespoons Olive oil",
+                "2 Tbsps olive oil",
             ],
             self.harvester_class.ingredients(),
         )
@@ -46,3 +46,12 @@ class TestClosetCooking(ScraperTest):
             "Toast almonds in a dry pan until golden and fragrant. Place into a bowl to cool. Rinse and thinly slice celery. Cut olives into slices. Squeeze orange juice from one orange. Peel remaining oranges well and fillet, cut fillets into pieces. Repeat the same steps with grapefruit. Separate endive into individual leaves, rinse and spin dry, cut into strips. Peel and pit avocado, cut pulp into small cubes. Combine avocado cubes with orange juice in a bowl. Add all remaining prepared salad ingredients, drizzle with oil and toss salad carefully. Arrange on plates and serve.",
             self.harvester_class.instructions(),
         )
+
+    def test_total_time(self):
+        self.assertEqual(20, self.harvester_class.total_time())
+
+    def test_cook_time(self):
+        return self.assertEqual(None, self.harvester_class.cook_time())
+
+    def test_prep_time(self):
+        return self.assertEqual(None, self.harvester_class.prep_time())

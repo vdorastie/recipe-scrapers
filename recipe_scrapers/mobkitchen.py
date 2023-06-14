@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 import json
 import re
 
@@ -17,17 +18,11 @@ class MobKitchen(AbstractScraper):
                 break
 
         recipe_schema = json.loads(recipe_schema)
-
-        # MobKitchen don't follow the Recipe schema correctly, so this fixes
-        # the formatting so the Schema is parsed correctly.
-        for instruction in recipe_schema["recipeInstructions"]:
-            instruction["text"] = instruction["text"]["result"]
-
         self.schema = SchemaOrg(recipe_schema, raw=True)
 
     @classmethod
-    def host(cls):
-        return "mobkitchen.co.uk"
+    def host(cls, domain="mobkitchen.co.uk"):
+        return domain
 
     def author(self):
         return self.schema.author()
@@ -52,9 +47,6 @@ class MobKitchen(AbstractScraper):
 
     def instructions(self):
         return self.schema.instructions()
-
-    def ratings(self):
-        return self.schema.ratings()
 
     def cuisine(self):
         return self.schema.cuisine()

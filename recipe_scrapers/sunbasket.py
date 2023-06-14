@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 import re
 
 from ._abstract import AbstractScraper
@@ -6,18 +7,18 @@ from ._utils import get_minutes, get_yields, normalize_string
 
 class SunBasket(AbstractScraper):
     @classmethod
-    def host(self, domain="com"):
+    def host(cls, domain="com"):
         return f"sunbasket.{domain}"
 
     def title(self):
         return self.soup.find("h1").get_text()
 
     def total_time(self):
-        minutes_tag = self.soup.find("span", text=re.compile(r"Minutes"))
+        minutes_tag = self.soup.find("span", string=re.compile(r"Minutes"))
         return get_minutes(minutes_tag.parent.get_text())
 
     def yields(self):
-        yields_tag = self.soup.find("span", text=re.compile(r"Servings,"))
+        yields_tag = self.soup.find("span", string=re.compile(r"Servings,"))
         return get_yields(yields_tag.parent.get_text())
 
     def ingredients(self):

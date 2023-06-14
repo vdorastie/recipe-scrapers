@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 from ._utils import get_minutes, get_yields, normalize_string
 
@@ -5,7 +6,7 @@ from ._utils import get_minutes, get_yields, normalize_string
 class Mindmegette(AbstractScraper):
     @classmethod
     def host(cls):
-        return "www.mindmegette.hu"
+        return "mindmegette.hu"
 
     def title(self):
         return self.soup.find("h1", {"class": "title"}).get_text()

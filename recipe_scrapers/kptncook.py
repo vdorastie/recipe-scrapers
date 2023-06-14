@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from urllib.parse import parse_qs, urlparse
 
 import requests
@@ -39,7 +40,7 @@ class KptnCook(AbstractScraper):
         ).json()[0]
 
     @classmethod
-    def host(self, subdomain="mobile"):
+    def host(cls, subdomain="mobile"):
         return f"{subdomain}.kptncook.com"
 
     def author(self):

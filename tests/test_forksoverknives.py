@@ -2,7 +2,7 @@ from recipe_scrapers.forksoverknives import ForksOverKnives
 from tests import ScraperTest
 
 
-class TestTimesOfIndiaScraper(ScraperTest):
+class TestForksOverKnives(ScraperTest):
 
     scraper_class = ForksOverKnives
 
@@ -10,13 +10,16 @@ class TestTimesOfIndiaScraper(ScraperTest):
         self.assertEqual("forksoverknives.com", self.harvester_class.host())
 
     def test_author(self):
-        self.assertEqual("Darshana Thacker", self.harvester_class.author())
+        self.assertEqual("Darshana Thacker Wendel", self.harvester_class.author())
 
     def test_title(self):
         self.assertEqual(
             "Butternut Squash Mac and Cheese with Broccoli",
             self.harvester_class.title(),
         )
+
+    def test_category(self):
+        self.assertEqual("Pasta & Noodles", self.harvester_class.category())
 
     def test_total_time(self):
         self.assertEqual(30, self.harvester_class.total_time())
@@ -40,8 +43,8 @@ class TestTimesOfIndiaScraper(ScraperTest):
                 "2 cups unsweetened, unflavored plant milk, such as almond, soy, cashew, or rice",
                 "2 tablespoons nutritional yeast",
                 "1 tablespoon white wine vinegar",
-                "¼ tsp. sea salt",
-                "⅛ tsp. freshly ground black pepper",
+                "¼ teaspoon sea salt",
+                "⅛ teaspoon freshly ground black pepper",
                 "3 cups dried whole grain penne pasta (8 oz.)",
                 "3 cups small broccoli florets",
                 "Fresh basil leaves",
@@ -56,7 +59,7 @@ class TestTimesOfIndiaScraper(ScraperTest):
         )
 
     def test_ratings(self):
-        self.assertEqual(5.0, self.harvester_class.ratings())
+        self.assertEqual(4.13, self.harvester_class.ratings())
 
     def test_language(self):
         self.assertEqual("en-US", self.harvester_class.language())

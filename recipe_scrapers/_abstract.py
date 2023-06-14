@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 import inspect
 from collections import OrderedDict
 from typing import Dict, List, Optional, Tuple, Union
@@ -17,6 +18,8 @@ HEADERS = {
 
 
 class AbstractScraper:
+    page_data: Union[str, bytes]
+
     def __init__(
         self,
         url: Union[str, None],
@@ -24,15 +27,16 @@ class AbstractScraper:
             Dict[str, str]
         ] = None,  # allows us to specify optional proxy server
         timeout: Optional[
-            Union[float, Tuple, None]
+            Union[float, Tuple[float, float], Tuple[float, None]]
         ] = None,  # allows us to specify optional timeout for request
         wild_mode: Optional[bool] = False,
-        html: Union[str, None] = None,
+        html: Union[str, bytes, None] = None,
     ):
         if html:
             self.page_data = html
             self.url = url
         else:
+            assert url is not None, "url required for fetching recipe data"
             resp = requests.get(
                 url,
                 headers=HEADERS,
@@ -107,16 +111,12 @@ class AbstractScraper:
 
         # Deprecated: check for a meta http-equiv header
         # See: https://www.w3.org/International/questions/qa-http-and-lang
-        meta_language = (
-            self.soup.find(
-                "meta",
-                {
-                    "http-equiv": lambda x: x and x.lower() == "content-language",
-                    "content": True,
-                },
-            )
-            if settings.META_HTTP_EQUIV
-            else None
+        meta_language = self.soup.find(
+            "meta",
+            {
+                "http-equiv": lambda x: x and x.lower() == "content-language",
+                "content": True,
+            },
         )
         if meta_language:
             language = meta_language.get("content").split(",", 1)[0]
@@ -137,7 +137,7 @@ class AbstractScraper:
         """instructions to prepare the recipe"""
         raise NotImplementedError("This should be implemented.")
 
-    def instructions_list(self) -> List:
+    def instructions_list(self) -> List[str]:
         """instructions to prepare the recipe"""
         return [
             instruction
@@ -169,3 +169,18 @@ class AbstractScraper:
     def site_name(self):
         meta = self.soup.find("meta", property="og:site_name")
         return meta.get("content") if meta else None
+
+    def to_json(self):
+        json_dict = {}
+        public_method_names = [
+            method
+            for method in dir(self)
+            if callable(getattr(self, method))
+            if not method.startswith("_") and method not in ["soup", "links", "to_json"]
+        ]
+        for method in public_method_names:
+            try:
+                json_dict[method] = getattr(self, method)()
+            except Exception:
+                pass
+        return json_dict

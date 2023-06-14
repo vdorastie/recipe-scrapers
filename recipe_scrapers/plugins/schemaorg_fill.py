@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 import functools
 import logging
 
@@ -20,6 +21,7 @@ class SchemaOrgFillPlugin(PluginInterface):
     run_on_methods = (
         "author",
         "title",
+        "category",
         "total_time",
         "yields",
         "image",

@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 
 
@@ -23,3 +24,6 @@ class BBCGoodFood(AbstractScraper):
 
     def instructions(self):
         return self.schema.instructions()
+
+    def description(self):
+        return self.schema.description()

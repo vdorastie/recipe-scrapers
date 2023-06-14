@@ -1,5 +1,5 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
-from ._utils import normalize_string
 
 
 class ComidinhasDoChef(AbstractScraper):
@@ -8,7 +8,7 @@ class ComidinhasDoChef(AbstractScraper):
         return "comidinhasdochef.com"
 
     def author(self):
-        return self.soup.find("span", {"class": "theauthor"}).get_text(strip=True)
+        return self.schema.author()
 
     def title(self):
         return self.soup.find("h1", {"class": "t-secondary"}).get_text()
@@ -17,17 +17,13 @@ class ComidinhasDoChef(AbstractScraper):
         return self.schema.total_time()
 
     def yields(self):
-        yields = self.soup.find("span", {"itemprop": "recipeYield"})
-        return yields.get_text() if yields else None
+        return self.schema.yields()
 
     def image(self):
         return self.schema.image()
 
     def ingredients(self):
-        return [
-            normalize_string(ingredient.get_text())
-            for ingredient in self.soup.find_all("li", {"itemprop": "recipeIngredient"})
-        ]
+        return self.schema.ingredients()
 
     def instructions(self):
         instructions_div = self.soup.find("div", {"class": "accordeon-text"})
@@ -41,5 +37,4 @@ class ComidinhasDoChef(AbstractScraper):
         return "\n".join(instructions)
 
     def ratings(self):
-        rating = self.soup.find("span", {"itemprop": "ratingValue"}).get_text()
-        return round(float(rating), 2)
+        return self.schema.ratings()

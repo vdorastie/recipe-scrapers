@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 from ._abstract import AbstractScraper
 from ._utils import get_minutes, get_yields, normalize_string
 
@@ -11,7 +12,7 @@ class Cucchiaio(AbstractScraper):
         return self.schema.author()
 
     def title(self):
-        return self.soup.find('title').get_text()
+        return self.schema.title()
 
     def total_time(self):
         block = self.soup.find("div", {"class": "scheda-ricetta-new"})
@@ -27,10 +28,7 @@ class Cucchiaio(AbstractScraper):
         return None
 
     def image(self):
-        data = self.soup.find("div", {"class": "auto"}).find("img", {"class": "image"})
-        if data:
-            data = data.get("src")
-        return data
+        return self.schema.image()
 
     def ingredients(self):
         return self.schema.ingredients()

@@ -1,3 +1,5 @@
+# mypy: allow-untyped-defs
+
 import extruct
 
 from ._abstract import AbstractScraper
@@ -20,6 +22,9 @@ class ZeitWochenmarkt(AbstractScraper):
 
     def title(self):
         return self.schema.title()
+
+    def author(self):
+        return self.soup.find("a", {"rel": "author"}).get_text().strip()
 
     def total_time(self):
         return self.schema.total_time()
