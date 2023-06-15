@@ -34,7 +34,7 @@ class Cucchiaio(AbstractScraper):
         return self.schema.ingredients()
 
     def instructions(self):
-        instructions_div = self.soup.find("div", {"class": "row mx-0 mb-f30"})
+        instructions_div = self.soup.find("div", {"class": "recipe_procedures section"})
         
         instructions = [
             normalize_string(instruction.get_text(strip=True, separator=" "))
